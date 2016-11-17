@@ -1,0 +1,59 @@
+{
+  "data": {
+    "user": [
+      {
+        "name": "Trey Whitson",
+        "email": "trey.whitson@gmail.com",
+        "password": "$2a$10$q4oiBuWxI25HpU1XRpOsSOerneErOkwXHnYtI.t0EhrqULnS9Qsw6",
+        "lastLoggedIn": "2016-11-16T22:36:32.161Z",
+        "createdAt": "2016-11-16T22:36:32.164Z",
+        "updatedAt": "2016-11-16T22:36:32.164Z",
+        "id": 3
+      },
+      {
+        "name": "Bigdickdaddy",
+        "email": "chrishansen@pornhub.com",
+        "password": "$2a$10$d072NBep5shT0xQ.5U.9YOmXUVBi7IJfgWcfHWIrI/W0Kj6gyOkGq",
+        "lastLoggedIn": "2016-11-17T01:48:53.874Z",
+        "createdAt": "2016-11-17T01:48:53.875Z",
+        "updatedAt": "2016-11-17T01:48:53.875Z",
+        "id": 4
+      }
+    ]
+  },
+  "schema": {
+    "user": {
+      "name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "unique": true
+      },
+      "password": {
+        "type": "string"
+      },
+      "lastLoggedIn": {
+        "type": "date",
+        "defaultsTo": "1970-01-01T00:00:00.000Z"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "user": {
+      "id": 4
+    }
+  }
+}

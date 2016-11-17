@@ -1,0 +1,45 @@
+<div ng-app="CreateAccountModule" ng-controller="CreateAccountController" ng-cloak>
+    
+    <h1>Create Account</h1>
+    
+    <form ng-submit="submitCreateAccountForm()" name="createaccount">
+        <div class="control-group form-group" ng-class="{'has-error':createaccount.name.$invalid && createaccount.name.$dirty}">
+            <label class="control-label">User's Name</label>
+            <input type="text" class="form-control" name="name" ng-model="createaccountForm.name" ng-maxlength="50" required>
+            
+            <span class="help-block has-error" ng-if="createaccount.name.$dirty">
+                <span ng-show="createaccount.name.$error.required">Name is required.</span>
+                <span ng-show="createaccount.name.$error.maxlength">The name cannot be more than 50 characters.</span>
+            </span>
+        </div>
+        
+        <div class="control-group form-group" ng-class="{'has-error':createaccount.email.$invalid && createaccount.email.$dirty}">
+            <label class="control-label">User's Email</label>
+            <input type="email" class="form-control" name="email" ng-model="createaccountForm.email" required>
+            
+            <span class="help-block has-error" ng-if="createaccount.email.$dirty">
+                <span ng-show="createaccount.email.$error.required">Email is required.</span>
+                <span ng-show="createaccount.email.$error.email">Not a valid email address.</span>
+            </span>
+        </div>
+        
+        <div class="control-group form-group" ng-class="{'has-error':createaccount.password.$invalid && createaccount.password.$dirty}">
+            <label class="control-label">User's Password</label>
+            <input type="password" class="form-control" name="password" ng-model="createaccountForm.password" ng-minlength="8" required>
+            
+            <span class="help-block has-error" ng-if="createaccount.password.$dirty">
+                <span ng-show="createaccount.password.$error.required">Password is required.</span>
+                <span ng-show="createaccount.password.$error.minlength">The password must be at least 8 characters.</span>
+            </span>
+        </div>
+        
+        <div class="control-group form-group">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="createaccount.$invalid">
+                <span ng-show="!createaccountForm.loading">Create Account</span>
+                <span class="fa fa-spinner" ng-show="createaccountForm.loading"></span>
+                <span ng-show="createaccountForm.loading">Preparing your new account...</span>
+            </button>
+        </div>
+    </form>
+    
+</div>
