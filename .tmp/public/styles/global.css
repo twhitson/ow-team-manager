@@ -1,0 +1,13 @@
+body {
+    background: #eee;
+}
+
+.login-container {
+    max-width: 350px;
+    padding-top: calc(50vh - 219px);
+    margin: auto;
+}
+
+.navbar-container {
+    padding-top: 25px;
+}

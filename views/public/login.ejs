@@ -1,0 +1,32 @@
+<div class="login-container" ng-app="LoginModule" ng-controller="LoginController" ng-cloak>
+    
+    <h1 class="text-center">Login</h1>
+    
+    <form ng-submit="submitLoginForm()" name="login">
+        <div class="control-group form-group" ng-class="{'has-error':login.email.$invalid && login.email.$dirty}">
+            <input type="email" class="form-control" name="email" ng-model="loginForm.email" required placeholder="Email">
+            
+            <span class="help-block has-error" ng-if="login.email.$dirty">
+                <span ng-show="login.email.$error.required">Email is required.</span>
+                <span ng-show="login.email.$error.email">Not a valid email address.</span>
+            </span>
+        </div>
+        
+        <div class="control-group form-group" ng-class="{'has-error':login.password.$invalid && login.password.$dirty}">
+            <input type="password" class="form-control" name="password" ng-model="loginForm.password" required placeholder="Password">
+            
+            <span class="help-block has-error" ng-if="login.password.$dirty">
+                <span ng-show="login.password.$error.required">Password is required.</span>
+            </span>
+        </div>
+        
+        <div class="control-group form-group">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="login.$invalid">
+                <span ng-show="!loginForm.loading">Login</span>
+                <span class="fa fa-spinner" ng-show="loginForm.loading"></span>
+                <span ng-show="loginForm.loading">Processing...</span>
+            </button>
+        </div>
+    </form>
+    
+</div>

@@ -4,14 +4,38 @@
  * UserController
  *
  * @description :: Server-side logic for managing users
- * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
+    
+    login: function(req, res) {
+        User.findOne({
+            email: req.param('email')
+        }, function foundUser(err, user) {
+            if (err) return res.negotiate(err);
+            if (!user) return res.notFound();
+            
+            require('machinepack-passwords').checkPassword({
+                passwordAttempt: req.param('password'),
+                encryptedPassword: user.password
+            }).exec({
+                error: function(err) {
+                    return res.negotiate(err);
+                },
+                incorrect: function() {
+                    return res.notFound();
+                },
+                success: function() {
+                    req.session.me = user.id;
+                    
+                    return res.ok();
+                }
+            });
+        });
+    },
+    
 	createaccount: function(req, res) {
-        var Passwords = require('machinepack-passwords');
-        
-        Passwords.encryptPassword({
+        require('machinepack-passwords').encryptPassword({
             password: req.param('password')
         })
         .exec({
@@ -31,9 +55,9 @@ module.exports = {
                         }
                     }
                     return res.json({id: newUser.id});
-                })
+                });
             },
         });
 	}
+	
 };
-

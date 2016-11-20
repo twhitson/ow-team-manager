@@ -1,10 +1,10 @@
-/* global angular toastr */
+/* global angular */
 
-angular.module('CreateAccountModule').controller('CreateAccountController', ['$scope', '$http', 'toastr', function($scope, $http, $toastr) {
+angular.module('CreateAccountModule').controller('CreateAccountController', ['$scope', '$http', 'toastr', function($scope, $http, toastr) {
     
     $scope.createaccountForm = {
         loading: false
-    }
+    };
     
     $scope.submitCreateAccountForm = function() {
         $scope.createaccountForm.loading = true;
@@ -24,7 +24,7 @@ angular.module('CreateAccountModule').controller('CreateAccountController', ['$s
             }
         })
         .finally(function eitherWay() {
-            $scope.createaccountForm.location = false;
-        })
-    }
+            $scope.createaccountForm.loading = false;
+        });
+    };
 }]);

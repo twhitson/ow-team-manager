@@ -1,27 +1,119 @@
 {
   "data": {
+    "team": [
+      {
+        "name": "Trey's Team",
+        "createdAt": "2016-11-20T20:43:40.180Z",
+        "updatedAt": "2016-11-20T20:43:40.180Z",
+        "id": 1
+      },
+      {
+        "name": "Test Team",
+        "createdAt": "2016-11-20T21:16:45.943Z",
+        "updatedAt": "2016-11-20T21:16:45.943Z",
+        "id": 2
+      },
+      {
+        "name": "Test Team 2",
+        "createdAt": "2016-11-20T21:20:19.697Z",
+        "updatedAt": "2016-11-20T21:20:19.697Z",
+        "id": 3
+      },
+      {
+        "name": "Test Team 3",
+        "createdAt": "2016-11-20T21:22:42.496Z",
+        "updatedAt": "2016-11-20T21:22:42.496Z",
+        "id": 4
+      },
+      {
+        "name": "Test Team 4",
+        "createdAt": "2016-11-20T21:23:09.743Z",
+        "updatedAt": "2016-11-20T21:23:09.743Z",
+        "id": 5
+      }
+    ],
+    "teammember": [
+      {
+        "battletag": "Trey#1610",
+        "createdAt": "2016-11-20T21:52:39.915Z",
+        "updatedAt": "2016-11-20T21:57:29.282Z",
+        "id": 1,
+        "team": 1
+      }
+    ],
     "user": [
       {
         "name": "Trey Whitson",
         "email": "trey.whitson@gmail.com",
         "password": "$2a$10$q4oiBuWxI25HpU1XRpOsSOerneErOkwXHnYtI.t0EhrqULnS9Qsw6",
         "lastLoggedIn": "2016-11-16T22:36:32.161Z",
+        "id": 3,
         "createdAt": "2016-11-16T22:36:32.164Z",
-        "updatedAt": "2016-11-16T22:36:32.164Z",
-        "id": 3
+        "updatedAt": "2016-11-16T22:36:32.164Z"
       },
       {
         "name": "Bigdickdaddy",
         "email": "chrishansen@pornhub.com",
         "password": "$2a$10$d072NBep5shT0xQ.5U.9YOmXUVBi7IJfgWcfHWIrI/W0Kj6gyOkGq",
         "lastLoggedIn": "2016-11-17T01:48:53.874Z",
+        "id": 4,
         "createdAt": "2016-11-17T01:48:53.875Z",
-        "updatedAt": "2016-11-17T01:48:53.875Z",
-        "id": 4
+        "updatedAt": "2016-11-17T01:48:53.875Z"
       }
     ]
   },
   "schema": {
+    "team": {
+      "name": {
+        "type": "string",
+        "unique": true
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "teammember": {
+      "battletag": {
+        "type": "string"
+      },
+      "region": {
+        "type": "string",
+        "enum": [
+          "eu",
+          "us",
+          "kr",
+          "cn",
+          "global"
+        ]
+      },
+      "team": {
+        "type": "integer",
+        "model": "team",
+        "foreignKey": true,
+        "alias": "team"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
     "user": {
       "name": {
         "type": "string"
@@ -54,6 +146,12 @@
   "counters": {
     "user": {
       "id": 4
+    },
+    "team": {
+      "id": 9
+    },
+    "teammember": {
+      "id": 1
     }
   }
 }

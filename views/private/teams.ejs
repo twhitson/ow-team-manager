@@ -1,0 +1,22 @@
+<div ng-app="TeamModule" ng-controller="TeamController" ng-init="loadTeams()" ng-cloak>
+    
+    <h1>Teams</h1>
+    
+    <div class="row">
+        <div ng-repeat="model in teams | orderBy:'name'">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="panel-title">{{model.name}}</div>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-repeat="member in model.teammembers">
+                            <a href="#"><span ng-bind="member.battletag"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

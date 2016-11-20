@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=typeof title == 'undefined' ? 'New Sails App' : title%></title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/angular-toastr.css">
+    <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/global.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <!--STYLES END-->
+  </head>
+
+  <body>
+    <div class="container">
+      <%- body %>
+    </div>
+
+    <!--TEMPLATES-->
+    
+    <!--TEMPLATES END-->
+
+    <!--SCRIPTS-->
+    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/dependencies/angular.min.js"></script>
+    <script src="/js/dependencies/angular-resource.min.js"></script>
+    <script src="/js/dependencies/angular-toastr.min.js"></script>
+    <script src="/js/public/login/LoginModule.js"></script>
+    <script src="/js/private/createaccount/CreateAccountModule.js"></script>
+    <script src="/js/private/teams/TeamModule.js"></script>
+    <script src="/js/private/createaccount/CreateAccountController.js"></script>
+    <script src="/js/private/teams/TeamController.js"></script>
+    <script src="/js/public/login/LoginController.js"></script>
+    <!--SCRIPTS END-->
+  </body>
+</html>
