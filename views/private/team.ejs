@@ -12,7 +12,7 @@
     <h2>Members</h2>
     
     <div class="panel panel-default">
-        <table class="table table-striped table-hover">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th width="15%">Battletag</th>
@@ -55,8 +55,8 @@
                         {{(parseFloat(member.allheroes['Eliminations-Average']) / parseFloat(member.allheroes['Deaths-Average']))| number:2}}
                         <span class="fa fa-spinner fa-spin" ng-show="member.allheroes == null"></span>
                     </td>
-                    <td>
-                        <a href="javascript:void(0);" ng-click="deleteTeamMember(member.id)"><i class="fa fa-trash"></i></a>
+                    <td class="text-center">
+                        <a href="javascript:void(0);" class="btn btn-danger btn-xs" ng-click="deleteTeamMember(member.id)"><i class="fa fa-times"></i></a>
                     </td>
                 </tr>
             </tbody>
