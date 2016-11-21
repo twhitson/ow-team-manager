@@ -12,6 +12,10 @@ a, a:link, a:hover, a:visited, a:active {
     color: #5bc0de;
 }
 
+a.btn, a.btn:link, a.btn:hover, a.btn:visited, a.btn:active {
+    color: #fff;
+}
+
 table tr td {
     font-size: 14px;
 }

@@ -71,12 +71,12 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
                 $scope.team = resData;
                 
                 $scope.team.teammembers.forEach(function (element) {
-                    $http.get('https://api.lootbox.eu/pc/' + element.region + '/' + element.battletag.replace('#', '-') + '/profile')
+                    $http.get('/overwatch/profile/pc/' + element.region + '/' + element.battletag.replace('#', '-'))
                     .then(function(response) {
-                        element.profile = response.data.data;
+                        element.profile = response.data;
                     });
                     
-                    $http.get('https://api.lootbox.eu/pc/' + element.region + '/' + element.battletag.replace('#', '-') + '/competitive/heroes')
+                    $http.get('/overwatch/heroes/pc/' + element.region + '/' + element.battletag.replace('#', '-') + '/competitive')
                     .then(function(response) {
                         element.heroes = response.data;
                         element.heroes.forEach(function(hero) {
@@ -84,7 +84,7 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
                         });
                     });
                     
-                    $http.get('https://api.lootbox.eu/pc/' + element.region + '/' + element.battletag.replace('#', '-') + '/competitive/allHeroes/')
+                    $http.get('/overwatch/allheroes/pc/' + element.region + '/' + element.battletag.replace('#', '-') + '/competitive')
                     .then(function(response) {
                         element.allheroes = response.data;
                     });

@@ -34,15 +34,12 @@ module.exports.routes = {
 
   '/': 'PublicController.index',
   'PUT /login': 'UserController.login',
-
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  * If a request to a URL doesn't match any of the custom routes above, it   *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+  
+  
+  
+  // API middleman
+  'GET /overwatch/profile/:platform/:region/:tag': 'OverwatchController.profile',
+  'GET /overwatch/heroes/:platform/:region/:tag/:mode': 'OverwatchController.heroes',
+  'GET /overwatch/allheroes/:platform/:region/:tag/:mode': 'OverwatchController.allheroes',
 
 };
