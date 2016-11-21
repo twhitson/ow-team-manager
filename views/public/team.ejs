@@ -1,5 +1,10 @@
 <div ng-app="TeamModule" ng-controller="TeamController" ng-init="loadTeam(<%= id %>)" ng-cloak>
     
+    <ul class="breadcrumb">
+        <li><a href="/public/teams">Teams</a></li>
+        <li class="active">{{team.name}}</li>
+    </ul>
+    
     <h1>{{team.name}}</h1>
     
     <h2>Members</h2>

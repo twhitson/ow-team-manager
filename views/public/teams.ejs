@@ -1,10 +1,14 @@
 <div ng-app="TeamModule" ng-controller="TeamController" ng-init="loadTeams()" ng-cloak>
     
+    <ul class="breadcrumb">
+        <li class="active">Teams</li>
+    </ul>
+    
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
             <h1>Teams</h1>
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
             <form class="form-inline text-right" style="padding-top: 20px;">
                 <div class="form-group">
                     <input type="text" class="form-control" ng-model="search.name" placeholder="Search...">
@@ -16,11 +20,11 @@
     <div class="row">
         <div ng-repeat="model in teams | orderBy:'name' | filter:search">
             <div class="clearfix" ng-if="$index % 3 == 0"></div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <a href="/team/view/{{model.id}}" style="color:#fff;">{{model.name}}</a>
+                            <a href="/public/team/{{model.id}}" style="color:#fff;">{{model.name}}</a>
                         </div>
                     </div>
                     <div class="panel-body">
