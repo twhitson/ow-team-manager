@@ -1,5 +1,29 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 body {
-    background: #eee;
+    background-image: url('../images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+a, a:link, a:hover, a:visited, a:active {
+    color: #5bc0de;
+}
+
+table tr td {
+    font-size: 14px;
+}
+
+.navbar {
+    font-size: 16px;
+    min-height: 45px;
+}
+
+.container {
+    background: rgba(0,0,0,0.75);
+    min-height: 100vh;
 }
 
 .login-container {

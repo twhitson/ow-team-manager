@@ -13,7 +13,7 @@ module.exports = {
     },
     
     view: function(req, res) {
-        return res.view('private/team', {layout: 'layouts/private'});
+        return res.view('private/team', {layout: 'layouts/private', id: req.param('id')});
     }
     
 };

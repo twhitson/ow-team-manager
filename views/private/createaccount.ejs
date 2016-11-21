@@ -3,7 +3,7 @@
     <h1>Create Account</h1>
     
     <form ng-submit="submitCreateAccountForm()" name="createaccount">
-        <div class="control-group form-group" ng-class="{'has-error':createaccount.name.$invalid && createaccount.name.$dirty}">
+        <div class="form-group" ng-class="{'has-error':createaccount.name.$invalid && createaccount.name.$dirty}">
             <label class="control-label">User's Name</label>
             <input type="text" class="form-control" name="name" ng-model="createaccountForm.name" ng-maxlength="50" required>
             
@@ -13,7 +13,7 @@
             </span>
         </div>
         
-        <div class="control-group form-group" ng-class="{'has-error':createaccount.email.$invalid && createaccount.email.$dirty}">
+        <div class="form-group" ng-class="{'has-error':createaccount.email.$invalid && createaccount.email.$dirty}">
             <label class="control-label">User's Email</label>
             <input type="email" class="form-control" name="email" ng-model="createaccountForm.email" required>
             
@@ -23,7 +23,7 @@
             </span>
         </div>
         
-        <div class="control-group form-group" ng-class="{'has-error':createaccount.password.$invalid && createaccount.password.$dirty}">
+        <div class="form-group" ng-class="{'has-error':createaccount.password.$invalid && createaccount.password.$dirty}">
             <label class="control-label">User's Password</label>
             <input type="password" class="form-control" name="password" ng-model="createaccountForm.password" ng-minlength="8" required>
             
@@ -33,10 +33,10 @@
             </span>
         </div>
         
-        <div class="control-group form-group">
+        <div class="form-group">
             <button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="createaccount.$invalid">
                 <span ng-show="!createaccountForm.loading">Create Account</span>
-                <span class="fa fa-spinner" ng-show="createaccountForm.loading"></span>
+                <span class="fa fa-spinner fa-spin" ng-show="createaccountForm.loading"></span>
                 <span ng-show="createaccountForm.loading">Processing...</span>
             </button>
         </div>
