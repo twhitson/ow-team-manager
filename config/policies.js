@@ -26,7 +26,8 @@ module.exports.policies = {
   },
   
   'team': {
-    '*': 'sessionAuth'
+    '*': 'sessionAuth',
+    'find': true
   },
   
   'teammember': {
