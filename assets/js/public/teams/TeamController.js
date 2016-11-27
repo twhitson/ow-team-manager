@@ -69,11 +69,15 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         }, function (resData, jwres) {
             $scope.$apply(function() {
                 $scope.team = resData;
+                var mbarraysr = [];
+                var mbarraykda = [];
                 
-                $scope.team.teammembers.forEach(function (element) {
+                $scope.team.teammembers.forEach(function(element) {
                     $http.get('/overwatch/profile/pc/' + element.region + '/' + element.battletag.replace('#', '-'))
                     .then(function(response) {
                         element.profile = response.data;
+                        mbarraysr = mbarraysr.concat(element.profile.competitive.rank);
+                        $scope.team.avgrank = parseInt($scope.calcAverage(mbarraysr));
                     });
                     
                     $http.get('/overwatch/heroes/pc/' + element.region + '/' + element.battletag.replace('#', '-') + '/competitive')
@@ -87,6 +91,8 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
                     $http.get('/overwatch/allheroes/pc/' + element.region + '/' + element.battletag.replace('#', '-') + '/competitive')
                     .then(function(response) {
                         element.allheroes = response.data;
+                        mbarraykda = mbarraykda.concat(parseFloat(element.allheroes['Eliminations-Average']) / parseFloat(element.allheroes['Deaths-Average']));
+                        $scope.team.avgkda = parseFloat($scope.calcAverage(mbarraykda));
                     });
                 });
             });
@@ -118,7 +124,6 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
             return;
         })
         .catch(function onError(sailsResponse) {
-            console.log(JSON.stringify(sailsResponse.data));
             toastr.error('Something bad happened. Please try again.', 'Error');
             return;
         })
@@ -165,6 +170,15 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
     
     $scope.parseFloat = function(value) {
         return parseFloat(value);
+    };
+    
+    $scope.calcAverage = function(value) {
+        var sum = 0;
+        for( var i = 0; i < value.length; i++ ){
+            sum += parseInt( value[i], 10 );
+        }
+        
+        return sum/value.length;
     };
     
 }]);

@@ -40,27 +40,9 @@ table tr td {
     padding-top: 25px;
 }
 
-
-
-.waterfall-list {
-    width: 100%;
-    display: block;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    position: relative;
-}
-.waterfall-list li {
-    position: absolute;
-    left: 0;
-    top: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 0 10px;
-    overflow: hidden;
-
-}
-.waterfall-list li:after {
-    clear: both;
+.aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }

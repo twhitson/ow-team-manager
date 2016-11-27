@@ -58,6 +58,12 @@ module.exports = {
                 });
             },
         });
-	}
+	},
+	
+	logout: function(req, res) {
+        req.session.destroy(function() {
+            return res.redirect('/');
+        });
+}
 	
 };

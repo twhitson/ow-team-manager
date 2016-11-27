@@ -1,15 +1,38 @@
 <div ng-app="TeamModule" ng-controller="TeamController" ng-init="loadTeam(<%= id %>)" ng-cloak>
     
-    <div class="row">
-        <div class="col-md-6">
-            <h1>{{team.name}}</h1>
-        </div>
-        <div class="col-md-6 text-right">
-            <a href="javascript:void(0);" ng-click="deleteTeam(<%= id %>)" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6" style="height:128px;">
+                    <div class="aligner">
+                        <h1 style="margin:0;width:100%;">
+                            {{team.name}}
+                            <small><a href="javascript:void(0);" ng-click="deleteTeam(<%= id %>)"><i class="fa fa-trash"></i></a></small>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="height:128px">
+                    <div class="pull-left">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="128" width="128" ng-if="team.avgrank > 0 && team.avgrank <= 1499">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="128" width="128" ng-if="team.avgrank >= 1500 && team.avgrank <= 1999">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="128" width="128" ng-if="team.avgrank >= 2000 && team.avgrank <= 2499">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="128" width="128" ng-if="team.avgrank >= 2500 && team.avgrank <= 2999">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="128" width="128" ng-if="team.avgrank >= 3000 && team.avgrank <= 3499">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="128" width="128" ng-if="team.avgrank >= 3500 && team.avgrank <= 3999">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="128" width="128" ng-if="team.avgrank >= 4000 && team.avgrank <= 5000">
+                    </div>
+                    <div class="aligner pull-left">
+                        <p class="lead" style="margin:0;">{{team.avgrank}}<br/><small>Average Rank</small></p>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="height:128px;">
+                    <div class="aligner">
+                        <p class="lead" style="margin:0;">{{team.avgkda | number:2}}<br/><small>Average K/D</small></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <h2>Members</h2>
     
     <div class="panel panel-default">
         <table class="table table-hover">
@@ -26,7 +49,13 @@
                 <tr ng-repeat="member in team.teammembers | orderBy:'-profile.competitive.rank'">
                     <td>{{member.battletag}}</td>
                     <td>
-                        <img src="{{member.profile.competitive.rank_img}}" ng-show="member.profile != null" height="24" width="24">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="24" width="24" ng-if="member.profile.competitive.rank > 0 && member.profile.competitive.rank <= 1499">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="24" width="24" ng-if="member.profile.competitive.rank >= 1500 && member.profile.competitive.rank <= 1999">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="24" width="24" ng-if="member.profile.competitive.rank >= 2000 && member.profile.competitive.rank <= 2499">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="24" width="24" ng-if="member.profile.competitive.rank >= 2500 && member.profile.competitive.rank <= 2999">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="24" width="24" ng-if="member.profile.competitive.rank >= 3000 && member.profile.competitive.rank <= 3499">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="24" width="24" ng-if="member.profile.competitive.rank >= 3500 && member.profile.competitive.rank <= 3999">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="24" width="24" ng-if="member.profile.competitive.rank >= 4000 && member.profile.competitive.rank <= 5000">
                         {{member.profile.competitive.rank}}
                         <span class="fa fa-spinner fa-spin" ng-show="member.profile == null"></span>
                     </td>
@@ -52,7 +81,7 @@
                         <span class="fa fa-spinner fa-spin" ng-show="member.heroes == null"></span>
                     </td>
                     <td>
-                        {{(parseFloat(member.allheroes['Eliminations-Average']) / parseFloat(member.allheroes['Deaths-Average']))| number:2}}
+                        {{(parseFloat(member.allheroes['Eliminations-Average']) / parseFloat(member.allheroes['Deaths-Average'])) | number:2}}
                         <span class="fa fa-spinner fa-spin" ng-show="member.allheroes == null"></span>
                     </td>
                     <td class="text-center">
@@ -86,13 +115,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
-    
-    <h2>Averages</h2>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            Stuff
         </div>
     </div>
     

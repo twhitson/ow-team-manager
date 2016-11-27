@@ -26,12 +26,15 @@ module.exports.policies = {
   },
   
   'team': {
-    '*': 'sessionAuth',
-    'find': true
+    '*': true,
+    'create': 'sessionAuth',
+    'modify': 'sessionAuth',
+    'destroy': 'sessionAuth'
   },
   
   'teammember': {
-    '*': 'sessionAuth'
+    '*': 'sessionAuth',
+    'find': true
   },
   
   
