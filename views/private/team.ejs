@@ -11,8 +11,8 @@
                         </h1>
                     </div>
                 </div>
-                <div class="col-sm-3" style="height:128px">
-                    <div class="pull-left">
+                <div class="col-sm-3" style="height:128px;">
+                    <div class="pull-left" style="height:128px;width:128px;">
                         <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="128" width="128" ng-if="team.avgrank > 0 && team.avgrank <= 1499">
                         <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="128" width="128" ng-if="team.avgrank >= 1500 && team.avgrank <= 1999">
                         <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="128" width="128" ng-if="team.avgrank >= 2000 && team.avgrank <= 2499">
@@ -22,12 +22,20 @@
                         <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="128" width="128" ng-if="team.avgrank >= 4000 && team.avgrank <= 5000">
                     </div>
                     <div class="aligner pull-left">
-                        <p class="lead" style="margin:0;">{{team.avgrank}}<br/><small>Average Rank</small></p>
+                        <p class="lead" style="margin:0;">
+                            <span class="fa fa-spinner fa-spin" ng-show="team.avgrank == null"></span>
+                            {{team.avgrank}}<br/>
+                            <small>Average Rank</small>
+                        </p>
                     </div>
                 </div>
                 <div class="col-sm-3" style="height:128px;">
                     <div class="aligner">
-                        <p class="lead" style="margin:0;">{{team.avgkda | number:2}}<br/><small>Average K/D</small></p>
+                        <p class="lead" style="margin:0;">
+                            <span class="fa fa-spinner fa-spin" ng-show="team.avgkda == null"></span>
+                            {{team.avgkda | number:2}}<br/>
+                            <small>Average K/D</small>
+                        </p>
                     </div>
                 </div>
             </div>

@@ -9,13 +9,16 @@ angular.module('CreateAccountModule').controller('CreateAccountController', ['$s
     $scope.submitCreateAccountForm = function() {
         $scope.createaccountForm.loading = true;
         
-        $http.post('/createaccount', {
+        $http.post('/user/createaccount', {
             name: $scope.createaccountForm.name,
             email: $scope.createaccountForm.email,
             password: $scope.createaccountForm.password
         })
         .then(function onSuccess(){
-            window.location = '/dashboard';
+            toastr.success('Account has been created.', 'Success');
+            $scope.createaccountForm.name = '';
+            $scope.createaccountForm.email = '';
+            $scope.createaccountForm.password = '';
         })
         .catch(function onError(sailsResponse) {
             if (sailsResponse.status === 409) {
