@@ -32,7 +32,6 @@ module.exports = {
                     });
                     
                     response.on('end', function() {
-                        console.log(body);
                         if (typeof body === "object" && body.error == null && body.data != null && body.data.competitive != null) {
                             member.rank = body.data.competitive.rank;
                         }
@@ -88,9 +87,9 @@ module.exports = {
                         if (typeof body === "object" && body.error == null) {
                             body = body.sort(function(a,b) {return (a.percentage < b.percentage) ? 1 : ((b.percentage < a.percentage) ? -1 : 0);} );
                             
-                            member.mostPlayed1 = body[0].name.replace('&#xFA;', 'ú').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
-                            member.mostPlayed2 = body[1].name.replace('&#xFA;', 'ú').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
-                            member.mostPlayed3 = body[2].name.replace('&#xFA;', 'ú').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
+                            member.mostPlayed1 = body[0].name.replace('&#xFA;', 'ú').replace('&#xF6;', 'ö').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
+                            member.mostPlayed2 = body[1].name.replace('&#xFA;', 'ú').replace('&#xF6;', 'ö').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
+                            member.mostPlayed3 = body[2].name.replace('&#xFA;', 'ú').replace('&#xF6;', 'ö').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
                         }
                         
                         Teammember.update(member.id, member).exec(function afterwards(err, updated) {

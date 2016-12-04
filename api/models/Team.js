@@ -19,6 +19,30 @@ module.exports = {
       type: 'string'
     },
     
+    averageRank: {
+      type: 'int'
+    },
+    
+    averageKd: {
+      type: 'float'
+    },
+    
+    gosuUrl: {
+      type: 'string'
+    },
+    
+    gosuInt: {
+      type: 'int'
+    },
+    
+    gosuNa: {
+      type: 'int'
+    },
+    
+    gosuEu: {
+      type: 'int'
+    },
+    
     teammembers: {
       collection: 'teammember',
       via: 'team'

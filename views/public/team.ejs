@@ -1,5 +1,10 @@
 <div ng-app="TeamModule" ng-controller="TeamController" ng-init="loadTeam(<%= id %>)" ng-cloak>
     
+    <ul class="breadcrumb">
+        <li><a href="/public">Teams</a></li>
+        <li class="active">{{team.name}}</li>
+    </ul>
+    
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
@@ -66,15 +71,15 @@
                         <span ng-if="member.rank == null">N/A</span>
                     </td>
                     <td>
-                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed1)}}.png" ng-if="member.mostPlayed1 != null" class="img-circle" height="24" width="24" />
+                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed1)}}.svg" ng-if="member.mostPlayed1 != null" class="img-circle" height="24" width="24" />
                         {{member.mostPlayed1}}
                     </td>
                     <td>
-                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed2)}}.png" ng-if="member.mostPlayed2 != null" class="img-circle" height="24" width="24" />
+                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed2)}}.svg" ng-if="member.mostPlayed2 != null" class="img-circle" height="24" width="24" />
                         {{member.mostPlayed2}}
                     </td>
                     <td>
-                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed3)}}.png" ng-if="member.mostPlayed3 != null" class="img-circle" height="24" width="24" />
+                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed3)}}.svg" ng-if="member.mostPlayed3 != null" class="img-circle" height="24" width="24" />
                         {{member.mostPlayed3}}
                     </td>
                     <td>

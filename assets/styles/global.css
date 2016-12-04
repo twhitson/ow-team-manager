@@ -12,16 +12,10 @@
 	font-style: normal;
 }
 
-html, body {
-    font-family: 'Overwatch';
-    font-size: 20px;
+body {
     background-image: url('../images/background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-table tbody tr td, table thead tr th {
-    font-size: 20px;
 }
 
 a, a:link, a:hover, a:visited, a:active {
@@ -37,6 +31,7 @@ table tr td {
 }
 
 .overwatch-font * {
+    font-family: 'Overwatch';
     font-size: 48px;
 }
 

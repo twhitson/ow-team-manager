@@ -7,23 +7,28 @@
         <div class="col-xs-8" style="margin:0;height:147px;background:#15171a;">
             <div class="row">
                 <div class="col-xs-3" style="margin-top:-26px;">
-                    <img src="https://pbs.twimg.com/profile_images/660946436801101824/niM7azZS.jpg" height="200" width="200" class="img-circle">
+                    <img src="/images/hndgaming.png" height="200" width="200" class="img-circle" ng-if="team.imageUrl == null" />
+                    <img src="{{team.imageUrl}}" height="200" width="200" class="img-circle" ng-if="team.imageUrl != null">
                 </div>
                 <div class="col-xs-6 text-center gradient-text" style="font-size:84px;line-height:147px;">
                     {{team.name}}
                 </div>
                 <div class="col-xs-3 text-right" style="padding-top:3px;">
-                    S2 &nbsp;
-                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="48" width="48" ng-if="team.avgrank > 0 && team.avgrank <= 1499">
-                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="48" width="48" ng-if="team.avgrank >= 1500 && team.avgrank <= 1999">
-                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="48" width="48" ng-if="team.avgrank >= 2000 && team.avgrank <= 2499">
-                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="48" width="48" ng-if="team.avgrank >= 2500 && team.avgrank <= 2999">
-                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="48" width="48" ng-if="team.avgrank >= 3000 && team.avgrank <= 3499">
-                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="48" width="48" ng-if="team.avgrank >= 3500 && team.avgrank <= 3999">
-                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="48" width="48" ng-if="team.avgrank >= 4000 && team.avgrank <= 5000">
-                    {{team.avgrank}}
+                    <span ng-if="team.averageRank == 0">N/A</span>
+                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="48" width="48" ng-if="team.averageRank > 0 && team.averageRank <= 1499">
+                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="48" width="48" ng-if="team.averageRank >= 1500 && team.averageRank <= 1999">
+                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="48" width="48" ng-if="team.averageRank >= 2000 && team.averageRank <= 2499">
+                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="48" width="48" ng-if="team.averageRank >= 2500 && team.averageRank <= 2999">
+                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="48" width="48" ng-if="team.averageRank >= 3000 && team.averageRank <= 3499">
+                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="48" width="48" ng-if="team.averageRank >= 3500 && team.averageRank <= 3999">
+                    <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="48" width="48" ng-if="team.averageRank >= 4000 && team.averageRank <= 5000">
+                    {{team.averageRank}}
                     <br/>
-                    NA/71 &nbsp; INT/206
+                    <img src="/images/gosugamers.png" height="32" width="32" />
+                    <span ng-if="team.gosuUrl == null">N/A</span>
+                    <span ng-if="team.gosuNa != null">NA/{{team.gosuNa}} &nbsp;</span>
+                    <span ng-if="team.gosuEu != null">EU/{{team.gosuEu}} &nbsp;</span>
+                    <span ng-if="team.gosuInt != null">INT/{{team.gosuInt}}</span>
                 </div>
             </div>
         </div>
@@ -40,18 +45,26 @@
             <table width="100%">
                 <tbody>
                     <tr>
-                        <td width="20%" class="text-right gradient-text" style="padding-right:10px;">{{filterBattletag(member.battletag) | uppercase}}</td>
+                        <td width="15%" class="text-right gradient-text" style="padding-right:10px;">{{filterBattletag(member.battletag) | uppercase}}</td>
                         <td width="56px" style="height:76px;background:url('/images/bar-curve-left.png')"></td>
-                        <td style="background:#b1afae;color:#141618;height:76px;">
+                        <td style="background:#b1afae;color:#141618;height:76px;line-height:76px;">
                             <div class="row">
-                                <div class="col-xs-4 text-left">{{member.mostPlayed1 | uppercase}}</div>
-                                <div class="col-xs-4 text-center">{{member.mostPlayed2 | uppercase}}</div>
-                                <div class="col-xs-4 text-right">{{member.mostPlayed3 | uppercase}}</div>
+                                <div class="col-xs-4 text-left">
+                                    <img src="/images/heroes/{{filterHeroName(member.mostPlayed1)}}.svg" ng-if="member.mostPlayed1 != null" class="img-circle svg" height="48" width="48" style="margin-left:-10px;" />
+                                    <span style="margin-left: -35px;">{{member.mostPlayed1 | uppercase}}</span>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <img src="/images/heroes/{{filterHeroName(member.mostPlayed2)}}.svg" ng-if="member.mostPlayed2 != null" class="img-circle svg" height="48" width="48" style="margin-left:-10px;" />
+                                    <span style="margin-left: -35px;">{{member.mostPlayed2 | uppercase}}</span>
+                                </div>
+                                <div class="col-xs-4 text-right">
+                                    <img src="/images/heroes/{{filterHeroName(member.mostPlayed3)}}.svg" ng-if="member.mostPlayed3 != null" class="img-circle svg" height="48" width="48" style="margin-left:-10px;" />
+                                    <span style="margin-left: -35px;">{{member.mostPlayed3 | uppercase}}</span>
+                                </div>
                             </div>
                         </td>
                         <td width="56px" style="height:76px;background:url('/images/bar-curve-right.png')"></td>
-                        <td width="17%" class="gradient-text">
-                            S2 &nbsp;
+                        <td width="15%" class="gradient-text">
                             <span style="width:48px;height:48px;display:inline-block;" ng-if="member.rank == null || member.rank == 0"></span>
                             <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="48" width="48" ng-if="member.rank > 0 && member.rank <= 1499">
                             <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="48" width="48" ng-if="member.rank >= 1500 && member.rank <= 1999">
@@ -62,7 +75,7 @@
                             <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="48" width="48" ng-if="member.rank >= 4000 && member.rank <= 5000">
                             {{member.rank}} <span ng-if="member.rank == null">N/A</span>
                         </td>
-                        <td width="10%" class="gradient-text">K/D {{member.averageKd | number:2}}</td>
+                        <td width="12%" class="gradient-text">K/D {{member.averageKd | number:2}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -31,17 +31,31 @@
         <div ng-repeat="model in teams | orderBy:'name' | filter:search">
             <div class="clearfix" ng-if="$index % 3 == 0"></div>
             <div class="col-sm-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="panel-title">
-                            <a href="/team/view/{{model.id}}" style="color:#fff;">{{model.name}}</a>
+                <div class="well text-center">
+                    <a href="/team/view/{{model.id}}" style="color:#fff;">
+                        <span class="lead">{{model.name}}</span>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <span ng-if="model.averageRank == 0 || model.averageRank == null">N/A</span>
+                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="25" width="25" ng-if="model.averageRank > 0 && model.averageRank <= 1499">
+                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="25" width="25" ng-if="model.averageRank >= 1500 && model.averageRank <= 1999">
+                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="25" width="25" ng-if="model.averageRank >= 2000 && model.averageRank <= 2499">
+                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="25" width="25" ng-if="model.averageRank >= 2500 && model.averageRank <= 2999">
+                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="25" width="25" ng-if="model.averageRank >= 3000 && model.averageRank <= 3499">
+                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="25" width="25" ng-if="model.averageRank >= 3500 && model.averageRank <= 3999">
+                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="25" width="25" ng-if="model.averageRank >= 4000 && model.averageRank <= 5000">
+                                {{model.averageRank}}
+                            </div>
+                            <div class="col-xs-6">
+                                <span ng-if="model.gosuUrl == null">N/A</span>
+                                <span ng-if="model.gosuNa != null">NA/{{model.gosuNa}} &nbsp;</span>
+                                <span ng-if="model.gosuEu != null">EU/{{model.gosuEu}} &nbsp;</span>
+                                <span ng-if="model.gosuInt != null">INT/{{model.gosuInt}}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="panel-body">
-                        <div ng-repeat="member in model.teammembers">
-                            {{member.battletag}}
-                        </div>
-                    </div>
+                        <img src="/images/hndgaming.png" height="100" width="100" class="img-circle" ng-if="model.imageUrl == null" />
+                        <img src="{{model.imageUrl}}" height="100" width="100" class="img-circle" ng-if="model.imageUrl != null">
+                    </a>
                 </div>
             </div>
         </div>

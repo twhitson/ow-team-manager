@@ -6,11 +6,11 @@
  */
  
 module.exports = {
-    index: function(req, res) {
+    login: function(req, res) {
         return res.view('public/login');
     },
     
-    teams: function(req, res) {
+    index: function(req, res) {
         return res.view('public/teams');
     },
     

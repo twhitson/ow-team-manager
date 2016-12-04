@@ -37,7 +37,8 @@ module.exports = {
     },
     
     team: {
-      model: 'team'
+      model: 'team',
+      required: true
     }
     
   }

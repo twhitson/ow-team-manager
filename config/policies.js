@@ -27,6 +27,7 @@ module.exports.policies = {
   
   'team': {
     '*': true,
+    'view': 'sessionAuth',
     'create': 'sessionAuth',
     'modify': 'sessionAuth',
     'destroy': 'sessionAuth'

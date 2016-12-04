@@ -75,19 +75,24 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
             var mbarraykda = [];
             $scope.team.teammembers.forEach(function(member) {
                 if (member.rank != null && member.rank != 0) {
-                    console.log(member.rank);
                     mbarraysr = mbarraysr.concat(member.rank);
                 }
                 if (member.averageKd != null && member.averageKd != 0) {
-                    console.log(member.averageKd);
                     mbarraykda = mbarraykda.concat(member.averageKd);
                 }
             });
             
-            $scope.$apply(function() {
-                $scope.team.avgrank = parseInt($scope.calcAverage(mbarraysr));
-                $scope.team.avgkda = parseFloat($scope.calcAverage(mbarraykda));
-            });
+            var newAverageRank = parseInt($scope.calcAverage(mbarraysr));
+            var newAverageKd = parseFloat($scope.calcAverage(mbarraykda));
+            
+            if (newAverageRank > 0 && newAverageKd > 0) {
+                if ($scope.team.averageRank != newAverageRank || $scope.team.averageKd != newAverageKd) {
+                    $http.post('/team/update/' + $scope.team.id, {
+                        averageRank: newAverageRank,
+                        averageKd: newAverageKd
+                    });
+                }
+            }
         });
     };
     
@@ -102,6 +107,38 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
     io.socket.on('team', function (message) {
         $scope.loadTeam($scope.team.id);
     });
+    
+    
+    /* Reload Team */
+    
+    $scope.loadGosu = function(id) {
+        toastr.info('Pulling data from Gosu.', 'Loading...');
+        $http.post('/team/loaddata/' + id)
+        .then(function onSuccess() {
+            toastr.success('Gosu data loaded.', 'Success');
+            $scope.loadTeam($scope.team.id);
+            return;
+        })
+        .catch(function onError(sailsResponse) {
+            toastr.error('Something went wrong. Try again', 'Error');
+            return;
+        });
+    };
+    
+    $scope.updateGosuUrl = function(id) {
+        $http.post('/team/update/' + id, {
+            gosuUrl: $scope.team.gosuUrl
+        })
+        .then(function onSuccess() {
+            toastr.success('Gosu URL updated.', 'Success');
+            $scope.loadTeam($scope.team.id);
+            return;
+        })
+        .catch(function onError(sailsResponse) {
+            toastr.error('Something went wrong. Try again.', 'Error');
+            return;
+        });
+    };
     
     
     /* Add Team Member */
@@ -136,7 +173,7 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
     /* Reload Team Member */
     
     $scope.reloadTeamMember = function(id) {
-        toastr.info('Pulling data from Overwatch, this might take a minute.', 'Loading...');
+        toastr.info('Pulling data from Overwatch.', 'Loading...');
         $http.post('/teammember/loaddata/' + id)
         .then(function onSuccess() {
             toastr.success('Data loaded.', 'Success');
@@ -145,6 +182,24 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         })
         .catch(function onError(sailsResponse) {
             toastr.error(sailsResponse.data, 'Error');
+            return;
+        });
+    };
+    
+    
+    /* Update Team Member */
+    
+    $scope.updateMemberRank = function(id, rank) {
+        $http.post('/teammember/update/' + id, {
+            rank: rank
+        })
+        .then(function onSuccess() {
+            toastr.success('Rank updated.', 'Success');
+            $scope.loadTeam($scope.team.id);
+            return;
+        })
+        .catch(function onError(sailsResponse) {
+            toastr.error('Something went wrong. Try again.', 'Error');
             return;
         });
     };
