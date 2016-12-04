@@ -15,6 +15,10 @@ module.exports = {
       unique: true
     },
     
+    imageUrl: {
+      type: 'string'
+    },
+    
     teammembers: {
       collection: 'teammember',
       via: 'team'

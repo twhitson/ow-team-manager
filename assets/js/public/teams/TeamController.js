@@ -69,34 +69,34 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         }, function (resData, jwres) {
             $scope.$apply(function() {
                 $scope.team = resData;
-                var mbarraysr = [];
-                var mbarraykda = [];
-                
-                $scope.team.teammembers.forEach(function(element) {
-                    $http.get('/overwatch/profile/pc/' + element.region + '/' + element.battletag.replace('#', '-'))
-                    .then(function(response) {
-                        element.profile = response.data;
-                        mbarraysr = mbarraysr.concat(element.profile.competitive.rank);
-                        $scope.team.avgrank = parseInt($scope.calcAverage(mbarraysr));
-                    });
-                    
-                    $http.get('/overwatch/heroes/pc/' + element.region + '/' + element.battletag.replace('#', '-') + '/competitive')
-                    .then(function(response) {
-                        element.heroes = response.data;
-                        element.heroes.forEach(function(hero) {
-                            hero.name = hero.name.replace('&#xFA;', 'ú').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
-                        });
-                    });
-                    
-                    $http.get('/overwatch/allheroes/pc/' + element.region + '/' + element.battletag.replace('#', '-') + '/competitive')
-                    .then(function(response) {
-                        element.allheroes = response.data;
-                        mbarraykda = mbarraykda.concat(parseFloat(element.allheroes['Eliminations-Average']) / parseFloat(element.allheroes['Deaths-Average']));
-                        $scope.team.avgkda = parseFloat($scope.calcAverage(mbarraykda));
-                    });
-                });
+            });
+            
+            var mbarraysr = [];
+            var mbarraykda = [];
+            $scope.team.teammembers.forEach(function(member) {
+                if (member.rank != null && member.rank != 0) {
+                    console.log(member.rank);
+                    mbarraysr = mbarraysr.concat(member.rank);
+                }
+                if (member.averageKd != null && member.averageKd != 0) {
+                    console.log(member.averageKd);
+                    mbarraykda = mbarraykda.concat(member.averageKd);
+                }
+            });
+            
+            $scope.$apply(function() {
+                $scope.team.avgrank = parseInt($scope.calcAverage(mbarraysr));
+                $scope.team.avgkda = parseFloat($scope.calcAverage(mbarraykda));
             });
         });
+    };
+    
+    $scope.filterBattletag = function(tag) {
+        return tag.substr(0, tag.indexOf("#"));
+    };
+    
+    $scope.filterHeroName = function(name) {
+        return name.replace(':', '');
     };
     
     io.socket.on('team', function (message) {
@@ -129,6 +129,23 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         })
         .finally(function eitherWay() {
             $scope.addmemberForm.loading = false;
+        });
+    };
+    
+    
+    /* Reload Team Member */
+    
+    $scope.reloadTeamMember = function(id) {
+        toastr.info('Pulling data from Overwatch, this might take a minute.', 'Loading...');
+        $http.post('/teammember/loaddata/' + id)
+        .then(function onSuccess() {
+            toastr.success('Data loaded.', 'Success');
+            $scope.loadTeam($scope.team.id);
+            return;
+        })
+        .catch(function onError(sailsResponse) {
+            toastr.error(sailsResponse.data, 'Error');
+            return;
         });
     };
     

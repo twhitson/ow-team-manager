@@ -2,10 +2,26 @@
   display: none !important;
 }
 
-body {
+@font-face {
+	font-family: 'Overwatch';
+	src: url('../fonts/BigNoodleTooOblique.eot');
+	src: url('../fonts/BigNoodleTooOblique.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/BigNoodleTooOblique.woff') format('woff'),
+		url('../fonts/BigNoodleTooOblique.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html, body {
+    font-family: 'Overwatch';
+    font-size: 20px;
     background-image: url('../images/background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+table tbody tr td, table thead tr th {
+    font-size: 20px;
 }
 
 a, a:link, a:hover, a:visited, a:active {
@@ -18,6 +34,16 @@ a.btn, a.btn:link, a.btn:hover, a.btn:visited, a.btn:active {
 
 table tr td {
     font-size: 14px;
+}
+
+.overwatch-font * {
+    font-size: 48px;
+}
+
+.overwatch-font .gradient-text {
+    background: -webkit-linear-gradient(#f5e7db, #e79192);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .navbar {

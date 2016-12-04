@@ -34,7 +34,8 @@ module.exports.policies = {
   
   'teammember': {
     '*': 'sessionAuth',
-    'find': true
+    'find': true,
+    'loaddata': true
   },
   
   

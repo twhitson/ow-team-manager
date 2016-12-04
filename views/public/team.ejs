@@ -1,21 +1,16 @@
 <div ng-app="TeamModule" ng-controller="TeamController" ng-init="loadTeam(<%= id %>)" ng-cloak>
     
-    <ul class="breadcrumb">
-        <li><a href="/public/teams">Teams</a></li>
-        <li class="active">{{team.name}}</li>
-    </ul>
-    
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-6" style="height:128px;">
+                <div class="col-md-6" style="height:128px;">
                     <div class="aligner">
                         <h1 style="margin:0;width:100%;">
                             {{team.name}}
                         </h1>
                     </div>
                 </div>
-                <div class="col-sm-3" style="height:128px;">
+                <div class="col-md-3" style="height:128px;">
                     <div class="pull-left" style="height:128px;width:128px;">
                         <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="128" width="128" ng-if="team.avgrank > 0 && team.avgrank <= 1499">
                         <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="128" width="128" ng-if="team.avgrank >= 1500 && team.avgrank <= 1999">
@@ -33,7 +28,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-sm-3" style="height:128px;">
+                <div class="col-md-3" style="height:128px;">
                     <div class="aligner">
                         <p class="lead" style="margin:0;">
                             <span class="fa fa-spinner fa-spin" ng-show="team.avgkda == null"></span>
@@ -53,42 +48,37 @@
                     <th width="15%">Battletag</th>
                     <th width="15%">Rank</th>
                     <th colspan="3">Most Played</th>
-                    <th width="15%">Average K/D</th>
-                    <th width="5%">&nbsp;</th>
+                    <th width="10%">Average K/D</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="member in team.teammembers | orderBy:'-profile.competitive.rank'">
-                    <td>{{member.battletag}}</td>
+                <tr ng-repeat="member in team.teammembers | orderBy:'-rank'">
+                    <td>{{member.battletag}} <small>{{member.region | uppercase}}</small></td>
                     <td>
-                        <img src="{{member.profile.competitive.rank_img}}" ng-show="member.profile != null" height="24" width="24">
-                        {{member.profile.competitive.rank}}
-                        <span class="fa fa-spinner fa-spin" ng-show="member.profile == null"></span>
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="24" width="24" ng-if="member.rank > 0 && member.rank <= 1499">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="24" width="24" ng-if="member.rank >= 1500 && member.rank <= 1999">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="24" width="24" ng-if="member.rank >= 2000 && member.rank <= 2499">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="24" width="24" ng-if="member.rank >= 2500 && member.rank <= 2999">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="24" width="24" ng-if="member.rank >= 3000 && member.rank <= 3499">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="24" width="24" ng-if="member.rank >= 3500 && member.rank <= 3999">
+                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="24" width="24" ng-if="member.rank >= 4000 && member.rank <= 5000">
+                        {{member.rank}}
+                        <span ng-if="member.rank == null">N/A</span>
                     </td>
                     <td>
-                        <div ng-repeat="hero in member.heroes | orderBy:percentage | limitTo:1">
-                            <img src="{{hero.image}}" ng-show="member.heroes != null" class="img-circle" height="24" width="24">
-                            {{hero.name}}
-                        </div>
-                        <span class="fa fa-spinner fa-spin" ng-show="member.heroes == null"></span>
+                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed1)}}.png" ng-if="member.mostPlayed1 != null" class="img-circle" height="24" width="24" />
+                        {{member.mostPlayed1}}
                     </td>
                     <td>
-                        <div ng-repeat="hero in member.heroes | orderBy:percentage | limitTo:2" ng-if="$index > 0">
-                            <img src="{{hero.image}}" ng-show="member.heroes != null" class="img-circle" height="24" width="24">
-                            {{hero.name}}
-                        </div>
-                        <span class="fa fa-spinner fa-spin" ng-show="member.heroes == null"></span>
+                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed2)}}.png" ng-if="member.mostPlayed2 != null" class="img-circle" height="24" width="24" />
+                        {{member.mostPlayed2}}
                     </td>
                     <td>
-                        <div ng-repeat="hero in member.heroes | orderBy:percentage | limitTo:3" ng-if="$index > 1">
-                            <img src="{{hero.image}}" ng-show="member.heroes != null" class="img-circle" height="24" width="24">
-                            {{hero.name}}
-                        </div>
-                        <span class="fa fa-spinner fa-spin" ng-show="member.heroes == null"></span>
+                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed3)}}.png" ng-if="member.mostPlayed3 != null" class="img-circle" height="24" width="24" />
+                        {{member.mostPlayed3}}
                     </td>
                     <td>
-                        {{(parseFloat(member.allheroes['Eliminations-Average']) / parseFloat(member.allheroes['Deaths-Average']))| number:2}}
-                        <span class="fa fa-spinner fa-spin" ng-show="member.allheroes == null"></span>
+                        {{member.averageKd | number:2}}
                     </td>
                 </tr>
             </tbody>
