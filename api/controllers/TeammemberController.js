@@ -5,9 +5,9 @@
  * 
  * @description :: Server-side logic for managing team members
  */
- 
-var https = require('https');
-var async = require('async');
+
+var request = require('request');
+var cheerio = require('cheerio');
 
 module.exports = {
     
@@ -18,91 +18,46 @@ module.exports = {
         Teammember.findOne(id).exec(function(err, member) {
             if (err != null) return res.json(err);
             
-            calls.push(function(callback) {
-                https.get({
-                    host: 'api.lootbox.eu',
-                    path: '/pc/' + member.region + '/' + member.battletag.replace("#", "-") + '/profile'
-                }, function(response) {
-                    var body = '';
-                    response.on('data', function(d) {
-                        try {
-                            body = JSON.parse(d);
-                        }
-                        catch(err) {}
-                    });
-                    
-                    response.on('end', function() {
-                        if (typeof body === "object" && body.error == null && body.data != null && body.data.competitive != null) {
-                            member.rank = body.data.competitive.rank;
-                        }
+            request('https://playoverwatch.com/en-us/career/pc/' + member.region + '/' + member.battletag.replace('#', '-'), function(error, response, html) {
+                if (!error) {
+                    try {
+                        var $ = cheerio.load(html);
                         
-                        Teammember.update(member.id, member).exec(function afterwards(err, updated) {
-                            if (err != null) { console.log(err); }
-                            callback();
-                        });
-                    });
-                });
-            });
-            
-            calls.push(function(callback) {
-                https.get({
-                    host: 'api.lootbox.eu',
-                    path: '/pc/' + member.region + '/' + member.battletag.replace("#", "-") + '/competitive/allHeroes/'
-                }, function(response) {
-                    var body = '';
-                    response.on('data', function(d) {
-                        try {
-                            body = JSON.parse(d);
-                        }
-                        catch(err) {}
-                    });
-                    
-                    response.on('end', function() {
-                        if (typeof body === "object" && body.error == null) {
-                            member.averageKd = parseFloat(parseFloat(body['Eliminations-Average']) / parseFloat(body['Deaths-Average']));
-                        }
-                        
-                        Teammember.update(member.id, member).exec(function afterwards(err, updated) {
-                            if (err != null) { console.log(err); }
-                            callback();
-                        });
-                    });
-                });
-            });
-            
-            calls.push(function(callback) {
-                https.get({
-                    host: 'api.lootbox.eu',
-                    path: '/pc/' + member.region + '/' + member.battletag.replace("#", "-") + '/competitive/heroes'
-                }, function(response) {
-                    var body = '';
-                    response.on('data', function(d) {
-                        try {
-                            body = JSON.parse(d);
-                        }
-                        catch(err) {}
-                    });
-                    
-                    response.on('end', function() {
-                        if (typeof body === "object" && body.error == null) {
-                            body = body.sort(function(a,b) {return (a.percentage < b.percentage) ? 1 : ((b.percentage < a.percentage) ? -1 : 0);} );
+                        $('.competitive-rank').filter(function() {
+                            var data = $(this);
                             
-                            member.mostPlayed1 = body[0].name.replace('&#xFA;', 'ú').replace('&#xF6;', 'ö').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
-                            member.mostPlayed2 = body[1].name.replace('&#xFA;', 'ú').replace('&#xF6;', 'ö').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
-                            member.mostPlayed3 = body[2].name.replace('&#xFA;', 'ú').replace('&#xF6;', 'ö').replace('Torbjoern', 'Torbjörn').replace('Soldier76', 'Soldier: 76');
-                        }
+                            member.rank = data.children().last().text();
+                        });
+                        
+                        $('#competitive').filter(function() {
+                            var data = $(this);
+                            
+                            var eliminations = parseFloat(data.children().first().children().first().children().last().children().first().children().first().children().last().children().first().text());
+                            var deaths = parseFloat(data.children().first().children().first().children().last().children().first().next().next().children().first().children().last().children().first().text());
+                            
+                            member.averageKd = parseFloat(eliminations / deaths);
+                        });
+                        
+                        $('#competitive *[data-category-id="overwatch.guid.0x0860000000000021"]').filter(function() {
+                            var data = $(this);
+                            
+                            member.mostPlayed1 = data.children().first().children().last().children().last().children().first().text();
+                            member.mostPlayed2 = data.children().first().next().children().last().children().last().children().first().text();
+                            member.mostPlayed3 = data.children().first().next().next().children().last().children().last().children().first().text();
+                        })
                         
                         Teammember.update(member.id, member).exec(function afterwards(err, updated) {
                             if (err != null) { console.log(err); }
-                            callback();
+                            return res.json(updated);
                         });
-                    });
-                });
-            });
-            
-            async.parallel(calls, function(err, result) {
-                if (err != null) { console.log(err); }
-                return res.json({status: "success"});
+                    }
+                    catch(err) {
+                        return res.json({});
+                    }
+                } else {
+                    console.log(error);
+                    return res.json({});
+                }
             });
         });
     }
