@@ -44,7 +44,7 @@ module.exports = {
                             member.mostPlayed1 = data.children().first().children().last().children().last().children().first().text();
                             member.mostPlayed2 = data.children().first().next().children().last().children().last().children().first().text();
                             member.mostPlayed3 = data.children().first().next().next().children().last().children().last().children().first().text();
-                        })
+                        });
                         
                         Teammember.update(member.id, member).exec(function afterwards(err, updated) {
                             if (err != null) { console.log(err); }

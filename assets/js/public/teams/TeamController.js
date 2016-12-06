@@ -1,33 +1,19 @@
 /* global angular io */
 
-angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 'toastr', function ($scope, $http, toastr) {
+angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 'toastr', '$timeout', function ($scope, $http, toastr, $timeout) {
     
     /* List Teams */
 
     $scope.loadTeams = function() {
-        io.socket.request({
-            method: 'get',
-            url: '/team/find',
-            data: {
-                limit: 50
-            }
-        }, function (resData, jwres) {
-            $scope.$apply(function() {
-                $scope.teams = resData;
+        $http.get('/team/find')
+        .then(function onSuccess(response) {
+            $timeout(function() {
+                $scope.$apply(function() {
+                    $scope.teams = response.data;
+                });
             });
         });
     };
-    
-    io.socket.on('team', function (message) {
-        if (message.verb === 'created') {
-            $scope.$apply(function() {
-                $scope.teams = $scope.teams.concat(message.data);
-            });
-        }
-        else {
-            $scope.loadTeams();
-        }
-    });
     
     
     /* Create Team */
@@ -60,39 +46,40 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
     /* View Team */
     
     $scope.loadTeam = function(id) {
-        io.socket.request({
-            method: 'get',
-            url: '/team/find/' + id,
-            data: {
-                limit: 50
-            }
-        }, function (resData, jwres) {
-            $scope.$apply(function() {
-                $scope.team = resData;
+        $http.get('/team/find/' + id)
+        .then(function onSuccess(response) {
+            $timeout(function() {
+                $scope.$apply(function() {
+                    $scope.team = response.data;
+                });
+            
+                var mbarraysr = [];
+                var mbarraykda = [];
+                $scope.team.teammembers.forEach(function(member) {
+                    if (member.rank != null && member.rank != 0) {
+                        mbarraysr = mbarraysr.concat(member.rank);
+                    }
+                    if (member.averageKd != null && member.averageKd != 0) {
+                        mbarraykda = mbarraykda.concat(member.averageKd);
+                    }
+                });
+                
+                var newAverageRank = parseInt($scope.calcAverage(mbarraysr));
+                var newAverageKd = parseFloat($scope.calcAverage(mbarraykda));
+                
+                if (newAverageRank > 0 && newAverageKd > 0) {
+                    if ($scope.team.averageRank != newAverageRank || $scope.team.averageKd != newAverageKd) {
+                        $http.post('/team/update/' + $scope.team.id, {
+                            averageRank: newAverageRank,
+                            averageKd: newAverageKd
+                        });
+                    }
+                }
             });
-            
-            var mbarraysr = [];
-            var mbarraykda = [];
-            $scope.team.teammembers.forEach(function(member) {
-                if (member.rank != null && member.rank != 0) {
-                    mbarraysr = mbarraysr.concat(member.rank);
-                }
-                if (member.averageKd != null && member.averageKd != 0) {
-                    mbarraykda = mbarraykda.concat(member.averageKd);
-                }
-            });
-            
-            var newAverageRank = parseInt($scope.calcAverage(mbarraysr));
-            var newAverageKd = parseFloat($scope.calcAverage(mbarraykda));
-            
-            if (newAverageRank > 0 && newAverageKd > 0) {
-                if ($scope.team.averageRank != newAverageRank || $scope.team.averageKd != newAverageKd) {
-                    $http.post('/team/update/' + $scope.team.id, {
-                        averageRank: newAverageRank,
-                        averageKd: newAverageKd
-                    });
-                }
-            }
+            return;
+        }, function onError(response) {
+            toastr.error('Could not load the team. Try again.', 'Error');
+            return;
         });
     };
     
@@ -103,10 +90,6 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
     $scope.filterHeroName = function(name) {
         return name.replace(':', '');
     };
-    
-    io.socket.on('team', function (message) {
-        $scope.loadTeam($scope.team.id);
-    });
     
     
     /* Reload Team */
@@ -135,6 +118,7 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         })
         .then(function onSuccess() {
             toastr.success('Team data updated.', 'Success');
+            $scope.loadTeam($scope.team.id);
             return;
         })
         .catch(function onError(sailsResponse) {
@@ -149,6 +133,7 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         })
         .then(function onSuccess() {
             toastr.success('Gosu URL updated.', 'Success');
+            $scope.loadTeam($scope.team.id);
             return;
         })
         .catch(function onError(sailsResponse) {
@@ -165,6 +150,7 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         })
         .then(function onSuccess() {
             toastr.success('Gosu data updated.', 'Success');
+            $scope.loadTeam($scope.team.id);
             return;
         })
         .catch(function onError(sailsResponse) {
@@ -190,6 +176,7 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         })
         .then(function onSuccess() {
             toastr.success('Player added to team!', 'Success');
+            $scope.loadTeam($scope.team.id);
             $scope.addmemberForm.battletag = "";
             return;
         })
@@ -260,6 +247,7 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         $http.delete('/teammember/destroy/' + id)
         .then(function onSuccess() {
             toastr.success('Team member removed.', 'Success');
+            $scope.loadTeam($scope.team.id);
             return;
         })
         .catch(function onError(sailsResponse) {
