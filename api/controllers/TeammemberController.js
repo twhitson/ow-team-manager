@@ -102,7 +102,7 @@ module.exports = {
             
             async.parallel(calls, function(err, result) {
                 if (err != null) { console.log(err); }
-                return res.json(member);
+                return res.json({status: "success"});
             });
         });
     }

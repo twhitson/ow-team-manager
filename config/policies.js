@@ -27,9 +27,10 @@ module.exports.policies = {
   
   'team': {
     '*': true,
+    'index': 'sessionAuth',
     'view': 'sessionAuth',
     'create': 'sessionAuth',
-    'modify': 'sessionAuth',
+    'update': 'sessionAuth',
     'destroy': 'sessionAuth'
   },
   
@@ -37,14 +38,6 @@ module.exports.policies = {
     '*': 'sessionAuth',
     'find': true,
     'loaddata': true
-  },
-  
-  
-  
-  // Controllers
-  
-  DashboardController: {
-    '*': 'sessionAuth'
   }
   
 };

@@ -7,7 +7,7 @@
         <div class="col-sm-6 text-right" style="padding-top:20px;">
             <form class="form-inline" ng-submit="submitCreateTeamForm()" name="createteam">
                 <div class="form-group" ng-class="{'has-error':createteam.name.$invalid && createteam.name.$dirty}">
-                    <input type="text" class="form-control" name="name" ng-model="createteamForm.name" ng-maxlength="50" required>
+                    <input type="text" class="form-control" name="name" placeholder="Team Name" ng-model="createteamForm.name" ng-maxlength="50" required>
                 </div>
                 
                 <div class="form-group">
@@ -37,13 +37,13 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <span ng-if="model.averageRank == 0 || model.averageRank == null">N/A</span>
-                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="25" width="25" ng-if="model.averageRank > 0 && model.averageRank <= 1499">
-                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="25" width="25" ng-if="model.averageRank >= 1500 && model.averageRank <= 1999">
-                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="25" width="25" ng-if="model.averageRank >= 2000 && model.averageRank <= 2499">
-                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="25" width="25" ng-if="model.averageRank >= 2500 && model.averageRank <= 2999">
-                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="25" width="25" ng-if="model.averageRank >= 3000 && model.averageRank <= 3499">
-                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="25" width="25" ng-if="model.averageRank >= 3500 && model.averageRank <= 3999">
-                                <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="25" width="25" ng-if="model.averageRank >= 4000 && model.averageRank <= 5000">
+                                <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="25" width="25" ng-if="model.averageRank > 0 && model.averageRank <= 1499">
+                                <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="25" width="25" ng-if="model.averageRank >= 1500 && model.averageRank <= 1999">
+                                <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="25" width="25" ng-if="model.averageRank >= 2000 && model.averageRank <= 2499">
+                                <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="25" width="25" ng-if="model.averageRank >= 2500 && model.averageRank <= 2999">
+                                <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="25" width="25" ng-if="model.averageRank >= 3000 && model.averageRank <= 3499">
+                                <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="25" width="25" ng-if="model.averageRank >= 3500 && model.averageRank <= 3999">
+                                <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="25" width="25" ng-if="model.averageRank >= 4000 && model.averageRank <= 5000">
                                 {{model.averageRank}}
                             </div>
                             <div class="col-xs-6">
@@ -53,8 +53,8 @@
                                 <span ng-if="model.gosuInt != null">INT/{{model.gosuInt}}</span>
                             </div>
                         </div>
-                        <img src="/images/hndgaming.png" height="100" width="100" class="img-circle" ng-if="model.imageUrl == null" />
-                        <img src="{{model.imageUrl}}" height="100" width="100" class="img-circle" ng-if="model.imageUrl != null">
+                        <img ng-src="/images/hndgaming.png" height="100" width="100" class="img-circle" ng-if="model.imageUrl == null" />
+                        <img ng-src="{{model.imageUrl}}" height="100" width="100" class="img-circle" ng-if="model.imageUrl != null">
                     </a>
                 </div>
             </div>

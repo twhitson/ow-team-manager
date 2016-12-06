@@ -32,10 +32,6 @@ module.exports = {
       type: 'float'
     },
     
-    lastUpdated: {
-      type: 'date'
-    },
-    
     team: {
       model: 'team',
       required: true

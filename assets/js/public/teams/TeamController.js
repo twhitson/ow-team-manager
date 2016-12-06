@@ -125,13 +125,46 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
         });
     };
     
-    $scope.updateGosuUrl = function(id) {
-        $http.post('/team/update/' + id, {
+    
+    /* Update Team Data */
+    
+    $scope.updateTeamData = function() {
+        $http.post('/team/update/' + $scope.team.id, {
+            name: $scope.team.name,
+            imageUrl: $scope.team.imageUrl
+        })
+        .then(function onSuccess() {
+            toastr.success('Team data updated.', 'Success');
+            return;
+        })
+        .catch(function onError(sailsResponse) {
+            toastr.error('Something went wrong. Try again.', 'Error');
+            return;
+        });
+    };
+    
+    $scope.updateGosuUrl = function() {
+        $http.post('/team/update/' + $scope.team.id, {
             gosuUrl: $scope.team.gosuUrl
         })
         .then(function onSuccess() {
             toastr.success('Gosu URL updated.', 'Success');
-            $scope.loadTeam($scope.team.id);
+            return;
+        })
+        .catch(function onError(sailsResponse) {
+            toastr.error('Something went wrong. Try again.', 'Error');
+            return;
+        });
+    };
+    
+    $scope.updateTeamGosu = function() {
+        $http.post('/team/update/' + $scope.team.id, {
+            gosuInt: $scope.team.gosuInt,
+            gosuEu: $scope.team.gosuEu,
+            gosuNa: $scope.team.gosuNa,
+        })
+        .then(function onSuccess() {
+            toastr.success('Gosu data updated.', 'Success');
             return;
         })
         .catch(function onError(sailsResponse) {

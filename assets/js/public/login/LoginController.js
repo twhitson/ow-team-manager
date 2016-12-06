@@ -16,7 +16,7 @@ angular.module('LoginModule').controller('LoginController', ['$scope', '$http', 
         .then(function onSuccess() {
             toastr.success('Redirecting to the dashboard!', 'Success');
             
-            window.location = '/dashboard';
+            window.location = '/team';
         })
         .catch(function onError(sailsResponse) {
             if (sailsResponse.status === 400 || sailsResponse.status === 404) {

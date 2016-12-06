@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "cheerio": "^0.22.0",
     "ejs": "2.3.4",
     "flat-cache": "^1.2.1",
     "grunt": "1.0.1",
@@ -24,8 +25,10 @@
     "middleman-proxy": "^0.1.2",
     "mrscraper": "0.0.1",
     "rc": "1.0.1",
+    "request": "^2.79.0",
     "sails": "~0.12.9",
-    "sails-disk": "~0.10.9"
+    "sails-disk": "~0.10.9",
+    "sails-mysql": "^0.11.5"
   },
   "scripts": {
     "debug": "node debug app.js",

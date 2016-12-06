@@ -64,6 +64,6 @@ module.exports = {
         req.session.destroy(function() {
             return res.redirect('/');
         });
-}
+    }
 	
 };

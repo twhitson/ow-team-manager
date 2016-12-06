@@ -3,23 +3,25 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-6" style="height:128px;">
+                <div class="col-md-9" style="height:128px;">
                     <div class="aligner">
+                        <img ng-src="/images/hndgaming.png" height="128" width="128" class="img-circle" ng-if="team.imageUrl == null" />
+                        <img ng-src="{{team.imageUrl}}" height="128" width="128" class="img-circle" ng-if="team.imageUrl != null" />
                         <h1 style="margin:0;width:100%;">
-                            {{team.name}}
-                            <small><a href="javascript:void(0);" ng-click="deleteTeam(<%= id %>)"><i class="fa fa-trash"></i></a></small>
+                            &nbsp; {{team.name}}
+                            <a href="javascript:void(0);" ng-click="team.editing = true" ng-if="team.editing != true" class="btn btn-default"><i class="fa fa-pencil"></i></a>
                         </h1>
                     </div>
                 </div>
                 <div class="col-md-3" style="height:128px;">
                     <div class="pull-left" style="height:128px;width:128px;">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="128" width="128" ng-if="team.averageRank > 0 && team.averageRank <= 1499">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="128" width="128" ng-if="team.averageRank >= 1500 && team.averageRank <= 1999">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="128" width="128" ng-if="team.averageRank >= 2000 && team.averageRank <= 2499">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="128" width="128" ng-if="team.averageRank >= 2500 && team.averageRank <= 2999">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="128" width="128" ng-if="team.averageRank >= 3000 && team.averageRank <= 3499">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="128" width="128" ng-if="team.averageRank >= 3500 && team.averageRank <= 3999">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="128" width="128" ng-if="team.averageRank >= 4000 && team.averageRank <= 5000">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="128" width="128" ng-if="team.averageRank > 0 && team.averageRank <= 1499">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="128" width="128" ng-if="team.averageRank >= 1500 && team.averageRank <= 1999">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="128" width="128" ng-if="team.averageRank >= 2000 && team.averageRank <= 2499">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="128" width="128" ng-if="team.averageRank >= 2500 && team.averageRank <= 2999">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="128" width="128" ng-if="team.averageRank >= 3000 && team.averageRank <= 3499">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="128" width="128" ng-if="team.averageRank >= 3500 && team.averageRank <= 3999">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="128" width="128" ng-if="team.averageRank >= 4000 && team.averageRank <= 5000">
                     </div>
                     <div class="aligner pull-left">
                         <p class="lead" style="margin:0;">
@@ -28,15 +30,22 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-md-3" style="height:128px;">
-                    <div class="aligner">
-                        <p class="lead" style="margin:0;">
-                            {{team.averageKd | number:2}}<br/>
-                            <small>Average K/D</small>
-                        </p>
-                    </div>
-                </div>
             </div>
+        </div>
+        <div class="panel-footer" ng-if="team.editing == true">
+            <a href="javascript:void(0);" ng-click="deleteTeam(<%= id %>)" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> Delete</a>
+            
+            <div class="form-group form-group-sm">
+                <input type="text" value="{{team.name}}" ng-model="team.name" class="form-control" style="width:30em;">
+            </div>
+            <div class="clearfix"></div>
+            
+            <div class="form-group form-group-sm">
+                <input type="text" value="{{team.imageUrl}}" ng-model="team.imageUrl" class="form-control" placeholder="Team Image URL" style="width:30em;">
+            </div>
+            <div class="clearfix"></div>
+            
+            <button type="button" class="btn btn-success btn-sm" ng-click="updateTeamData()"><i class="fa fa-check"></i> Save</button>
         </div>
     </div>
     
@@ -51,20 +60,32 @@
             <a href="javascript:void(0);" class="btn btn-default btn-xs" ng-click="team.gosuUrlEditing = true" ng-if="member.gosuEditing != true"><i class="fa fa-pencil"></i></a>
             <div class="form-group form-group-sm" ng-if="team.gosuUrlEditing == true">
                 <input type="text" value="{{team.gosuUrl}}" ng-model="team.gosuUrl" class="form-control" style="width:30em;float:left;">
-                <button type="button" class="btn btn-success btn-sm" ng-click="updateGosuUrl(team.id)" style="float:left;"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-success btn-sm" ng-click="updateGosuUrl()" style="float:left;"><i class="fa fa-check"></i></button>
             </div>
             <div class="clearfix"></div>
-            <div class="row">
+            <div class="row" ng-if="team.gosuUrl != null">
                 <div class="col-md-4">
-                    <span class="lead">INT/{{team.gosuInt}}</span>
+                    <span class="lead">INT/{{team.gosuInt}} <small><a href="javascript:void(0);" ng-click="team.gosuEditing = true" ng-if="team.gosuEditing != true" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a></small></span>
+                    <div class="form-group form-group-sm" ng-if="team.gosuEditing == true">
+                        <input type="text" value="{{team.gosuInt}}" ng-model="team.gosuInt" class="form-control" style="width:4em;">
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <span class="lead">EU/{{team.gosuEu}}</span>
+                    <span class="lead">EU/{{team.gosuEu}} <small><a href="javascript:void(0);" ng-click="team.gosuEditing = true" ng-if="team.gosuEditing != true" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a></small></span>
+                    <div class="form-group form-group-sm" ng-if="team.gosuEditing == true">
+                        <input type="text" value="{{team.gosuEu}}" ng-model="team.gosuEu" class="form-control" style="width:4em;">
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <span class="lead">NA/{{team.gosuNa}}</span>
+                    <span class="lead">NA/{{team.gosuNa}} <small><a href="javascript:void(0);" ng-click="team.gosuEditing = true" ng-if="team.gosuEditing != true" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a></small></span>
+                    <div class="form-group form-group-sm" ng-if="team.gosuEditing == true">
+                        <input type="text" value="{{team.gosuNa}}" ng-model="team.gosuNa" class="form-control" style="width:4em;">
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="panel-footer" ng-if="team.gosuEditing == true">
+            <button type="button" class="btn btn-success btn-sm" ng-click="updateTeamGosu()"><i class="fa fa-check"></i> Save</button>
         </div>
     </div>
     
@@ -83,13 +104,13 @@
                 <tr ng-repeat="member in team.teammembers | orderBy:'name'">
                     <td>{{member.battletag}} <small>{{member.region | uppercase}}</small></td>
                     <td>
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="24" width="24" ng-if="member.rank > 0 && member.rank <= 1499">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="24" width="24" ng-if="member.rank >= 1500 && member.rank <= 1999">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="24" width="24" ng-if="member.rank >= 2000 && member.rank <= 2499">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="24" width="24" ng-if="member.rank >= 2500 && member.rank <= 2999">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="24" width="24" ng-if="member.rank >= 3000 && member.rank <= 3499">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="24" width="24" ng-if="member.rank >= 3500 && member.rank <= 3999">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="24" width="24" ng-if="member.rank >= 4000 && member.rank <= 5000">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="24" width="24" ng-if="member.rank > 0 && member.rank <= 1499">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="24" width="24" ng-if="member.rank >= 1500 && member.rank <= 1999">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-3.png" height="24" width="24" ng-if="member.rank >= 2000 && member.rank <= 2499">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-4.png" height="24" width="24" ng-if="member.rank >= 2500 && member.rank <= 2999">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-5.png" height="24" width="24" ng-if="member.rank >= 3000 && member.rank <= 3499">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-6.png" height="24" width="24" ng-if="member.rank >= 3500 && member.rank <= 3999">
+                        <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-7.png" height="24" width="24" ng-if="member.rank >= 4000 && member.rank <= 5000">
                         {{member.rank}}
                         <a href="javascript:void(0);" class="btn btn-default btn-xs" ng-click="member.rankEditing = true" ng-if="member.rankEditing != true"><i class="fa fa-pencil"></i></a>
                         <div class="form-group form-group-sm" ng-if="member.rankEditing == true">
@@ -98,15 +119,15 @@
                         </div>
                     </td>
                     <td>
-                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed1)}}.svg" ng-if="member.mostPlayed1 != null" class="img-circle" height="24" width="24" />
+                        <img ng-src="/images/heroes/{{filterHeroName(member.mostPlayed1)}}.svg" ng-if="member.mostPlayed1 != null" class="img-circle" height="24" width="24" />
                         {{member.mostPlayed1}}
                     </td>
                     <td>
-                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed2)}}.svg" ng-if="member.mostPlayed2 != null" class="img-circle" height="24" width="24" />
+                        <img ng-src="/images/heroes/{{filterHeroName(member.mostPlayed2)}}.svg" ng-if="member.mostPlayed2 != null" class="img-circle" height="24" width="24" />
                         {{member.mostPlayed2}}
                     </td>
                     <td>
-                        <img src="/images/heroes/{{filterHeroName(member.mostPlayed3)}}.svg" ng-if="member.mostPlayed3 != null" class="img-circle" height="24" width="24" />
+                        <img ng-src="/images/heroes/{{filterHeroName(member.mostPlayed3)}}.svg" ng-if="member.mostPlayed3 != null" class="img-circle" height="24" width="24" />
                         {{member.mostPlayed3}}
                     </td>
                     <td>
