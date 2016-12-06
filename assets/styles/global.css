@@ -38,7 +38,7 @@ table tr td {
 }
 
 .overwatch-font .gradient-text {
-    background: -webkit-linear-gradient(#f5e7db, #e79192);
+    background: -webkit-linear-gradient(#f3ddc8, #e89792);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
