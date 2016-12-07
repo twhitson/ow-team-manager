@@ -50,7 +50,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="member in team.teammembers | orderBy:'-rank'">
-                    <td>{{member.battletag}} <small>{{member.region | uppercase}}</small></td>
+                    <td>{{filterBattletag(member.battletag)}} <small>{{member.region | uppercase}}</small></td>
                     <td>
                         <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="24" width="24" ng-if="member.rank > 0 && member.rank <= 1499">
                         <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="24" width="24" ng-if="member.rank >= 1500 && member.rank <= 1999">

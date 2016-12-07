@@ -19,7 +19,7 @@ module.exports = {
             if (err != null) return res.json(err);
             
             request('https://playoverwatch.com/en-us/career/pc/' + member.region + '/' + member.battletag.replace('#', '-'), function(error, response, html) {
-                if (!error) {
+                if (!error && response.statusCode === 200) {
                     try {
                         var $ = cheerio.load(html);
                         
@@ -48,15 +48,15 @@ module.exports = {
                         
                         Teammember.update(member.id, member).exec(function afterwards(err, updated) {
                             if (err != null) { console.log(err); }
-                            return res.json(updated);
+                            return res.json({"status": "SUCCESS"});
                         });
                     }
                     catch(err) {
-                        return res.json({});
+                        return res.json({"status": "FAILURE"});
                     }
                 } else {
                     console.log(error);
-                    return res.json({});
+                    return res.json({"status": "FAILURE"});
                 }
             });
         });

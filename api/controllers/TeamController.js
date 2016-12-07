@@ -27,7 +27,7 @@ module.exports = {
                 return res.json({error: "Invalid team ID."});
             } else {
                 request('http://www.gosugamers.net/overwatch/teams/' + team.gosuUrl, function(error, response, html) {
-                    if (!error) {
+                    if (!error && response.statusCode === 200) {
                         try {
                             var $ = cheerio.load(html);
                         

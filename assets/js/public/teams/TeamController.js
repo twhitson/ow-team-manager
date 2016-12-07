@@ -5,7 +5,7 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
     /* List Teams */
 
     $scope.loadTeams = function() {
-        $http.get('/team/find')
+        $http.get('/team/find?limit=100')
         .then(function onSuccess(response) {
             $timeout(function() {
                 $scope.$apply(function() {
@@ -191,6 +191,12 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
     
     
     /* Reload Team Member */
+    
+    $scope.reloadAllTeamMembers = function() {
+        $scope.team.teammembers.forEach(function(member) {
+            $scope.reloadTeamMember(member.id);
+        });
+    };
     
     $scope.reloadTeamMember = function(id) {
         toastr.info('Pulling data from Overwatch.', 'Loading...');
