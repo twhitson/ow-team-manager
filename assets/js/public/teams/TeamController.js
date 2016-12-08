@@ -231,6 +231,25 @@ angular.module('TeamModule').controller('TeamController', ['$scope', '$http', 't
     };
     
     
+    /* Team Leader */
+    
+    $scope.setLeaderStatus = function(id, stat) {
+        $http.post('/teammember/update/' + id, {
+            leader: stat
+        })
+        .then(function onSuccess() {
+            toastr.success('Leader updated.', 'Success');
+            $scope.loadTeam($scope.team.id);
+            return;
+        })
+        .catch(function onError(sailsResponse) {
+            toastr.error('Something went wrong. Try again.', 'Error');
+            console.log(sailsResponse.data);
+            return;
+        });
+    };
+    
+    
     /* Delete Team */
     
     $scope.deleteTeam = function(id) {

@@ -32,6 +32,10 @@ module.exports = {
       type: 'float'
     },
     
+    leader: {
+      type: 'boolean'
+    },
+    
     team: {
       model: 'team',
       required: true

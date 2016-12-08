@@ -42,6 +42,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
+                    <th width="3%">&nbsp;</th>
                     <th width="15%">Battletag</th>
                     <th width="15%">Rank</th>
                     <th colspan="3">Most Played</th>
@@ -50,7 +51,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="member in team.teammembers | orderBy:'-rank'">
-                    <td>{{filterBattletag(member.battletag)}} <small>{{member.region | uppercase}}</small></td>
+                    <td><i class="fa fa-star" ng-if="member.leader == true"></i></td>
+                    <td>{{filterBattletag(member.battletag)}}</td>
                     <td>
                         <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-1.png" height="24" width="24" ng-if="member.rank > 0 && member.rank <= 1499">
                         <img ng-src="https://blzgdapipro-a.akamaihd.net/game/rank-icons/season-2/rank-2.png" height="24" width="24" ng-if="member.rank >= 1500 && member.rank <= 1999">
